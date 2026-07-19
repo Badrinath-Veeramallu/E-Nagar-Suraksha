@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model
+  xmi:version="2.1"
+  xmlns:xmi="http://schema.omg.org/spec/XMI/2.1"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="_model"
+  name="E-Nagar Suraksha">
+
+  <!-- ============================================================
+       PRIMARY ACTORS
+  ============================================================ -->
+  <packagedElement xmi:type="uml:Actor" xmi:id="_citizen"    name="Citizen / User"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_admin"      name="Admin"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_police"     name="Police Officer"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_municipal"  name="Municipal Officer"/>
+
+  <!-- EXTERNAL ACTORS -->
+  <packagedElement xmi:type="uml:Actor" xmi:id="_clerkAuth"      name="Clerk Auth Service"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_mapSvc"         name="Map Service (Leaflet/OSM)"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_translationSvc" name="Translation Service"/>
+
+  <!-- ============================================================
+       SYSTEM BOUNDARY PACKAGE
+  ============================================================ -->
+  <packagedElement xmi:type="uml:Package" xmi:id="_system" name="E-Nagar Suraksha System">
+
+    <!-- ── AUTH & PROFILE ──────────────────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc01" name="Register / Sign Up"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc02" name="Login / Authenticate">
+      <include xmi:type="uml:Include" xmi:id="_inc_login_store" name="" addition="_uc43"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc03" name="Update Profile"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc04" name="Switch Language"/>
+
+    <!-- ── CITIZEN USE CASES ───────────────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc05" name="Submit Complaint">
+      <include xmi:type="uml:Include" xmi:id="_inc05a" name="" addition="_uc02"/>
+      <include xmi:type="uml:Include" xmi:id="_inc05b" name="" addition="_uc40"/>
+      <include xmi:type="uml:Include" xmi:id="_inc05c" name="" addition="_uc39"/>
+      <include xmi:type="uml:Include" xmi:id="_inc05d" name="" addition="_uc44"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc06" name="Upload Complaint Photo (optional)">
+      <extend xmi:type="uml:Extend" xmi:id="_ext06" name="optional for Citizen" extendedCase="_uc05"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc07" name="Select Location on Map"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc08" name="View My Complaints"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc09" name="Track Complaint Status"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc10" name="Submit Feedback / Rating">
+      <extend xmi:type="uml:Extend" xmi:id="_ext10" name="only when resolved or closed" extendedCase="_uc08"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc11" name="Re-open Complaint">
+      <extend xmi:type="uml:Extend" xmi:id="_ext11" name="only when status is closed" extendedCase="_uc08"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc12" name="Upvote Complaint"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc13" name="Add Comment (Citizen)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc14" name="Receive Notifications"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc15" name="Search Complaint (Public)"/>
+
+    <!-- ── ADMIN USE CASES ─────────────────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc16" name="View All Complaints"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc17" name="Monitor Dashboard"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc18" name="View Analytics and Reports"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc19" name="View Audit Logs"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc20" name="Assign / Override Complaint">
+      <include xmi:type="uml:Include" xmi:id="_inc20" name="" addition="_uc39"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc21" name="Create Police Account"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc22" name="Create Municipal Account"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc23" name="Manage Users (Block/Unblock/Delete)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc24" name="Manage Departments"/>
+
+    <!-- ── POLICE USE CASES ────────────────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc25" name="View Assigned Complaints (Police)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc26" name="View Complaint Details (Police)"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc27" name="Update Complaint Status (Police)">
+      <include xmi:type="uml:Include" xmi:id="_inc27" name="" addition="_uc43"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc28" name="Upload Proof Image (optional - Police)">
+      <extend xmi:type="uml:Extend" xmi:id="_ext28" name="optional for Police" extendedCase="_uc27"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc29" name="Mark as Resolved (Police)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc30" name="Add Comment (Police)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc31" name="Create Police Sub-Officer"/>
+
+    <!-- ── MUNICIPAL USE CASES ─────────────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc32" name="View Assigned Complaints (Municipal)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc33" name="View Complaint Details (Municipal)"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc34" name="Update Complaint Status (Municipal)">
+      <include xmi:type="uml:Include" xmi:id="_inc34" name="" addition="_uc43"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc35" name="Upload Resolution Proof (MANDATORY)"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc36" name="Mark as Resolved (Municipal)">
+      <include xmi:type="uml:Include" xmi:id="_inc36" name="mandatory proof required" addition="_uc35"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc37" name="Add Comment (Municipal)"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc38" name="Create Municipal Sub-Officer"/>
+
+    <!-- ── SYSTEM / INTERNAL USE CASES ─────────────────────── -->
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc39" name="Auto-Route Complaint (Police vs Municipal)">
+      <include xmi:type="uml:Include" xmi:id="_inc39" name="" addition="_uc42"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc40" name="Validate Complaint Data"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc41" name="Enforce SLA and Escalation">
+      <extend xmi:type="uml:Extend" xmi:id="_ext41" name="triggered when SLA deadline passes" extendedCase="_uc39"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc42" name="Send Real-time Notifications">
+      <include xmi:type="uml:Include" xmi:id="_inc42" name="" addition="_uc14"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc43" name="Store and Retrieve Data"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc44" name="Rate Limit Submissions"/>
+
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_uc45" name="Check Duplicate Complaints">
+      <extend xmi:type="uml:Extend" xmi:id="_ext45" name="triggered on geo+keyword match" extendedCase="_uc05"/>
+    </packagedElement>
+
+  </packagedElement>
+  <!-- end system package -->
+
+  <!-- ============================================================
+       ACTOR — USE CASE ASSOCIATIONS
+       Each association has two ownedEnd elements linking actor ↔ use case
+  ============================================================ -->
+
+  <!-- CITIZEN associations -->
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit01" memberEnd="_a_cit01_e1 _a_cit01_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit01_e1" type="_citizen"  association="_a_cit01"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit01_e2" type="_uc01"     association="_a_cit01"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit02" memberEnd="_a_cit02_e1 _a_cit02_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit02_e1" type="_citizen"  association="_a_cit02"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit02_e2" type="_uc02"     association="_a_cit02"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit03" memberEnd="_a_cit03_e1 _a_cit03_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit03_e1" type="_citizen"  association="_a_cit03"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit03_e2" type="_uc03"     association="_a_cit03"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit04" memberEnd="_a_cit04_e1 _a_cit04_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit04_e1" type="_citizen"  association="_a_cit04"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit04_e2" type="_uc04"     association="_a_cit04"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit05" memberEnd="_a_cit05_e1 _a_cit05_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit05_e1" type="_citizen"  association="_a_cit05"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit05_e2" type="_uc05"     association="_a_cit05"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit07" memberEnd="_a_cit07_e1 _a_cit07_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit07_e1" type="_citizen"  association="_a_cit07"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit07_e2" type="_uc07"     association="_a_cit07"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit08" memberEnd="_a_cit08_e1 _a_cit08_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit08_e1" type="_citizen"  association="_a_cit08"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit08_e2" type="_uc08"     association="_a_cit08"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit09" memberEnd="_a_cit09_e1 _a_cit09_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit09_e1" type="_citizen"  association="_a_cit09"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit09_e2" type="_uc09"     association="_a_cit09"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit12" memberEnd="_a_cit12_e1 _a_cit12_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit12_e1" type="_citizen"  association="_a_cit12"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit12_e2" type="_uc12"     association="_a_cit12"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit13" memberEnd="_a_cit13_e1 _a_cit13_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit13_e1" type="_citizen"  association="_a_cit13"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit13_e2" type="_uc13"     association="_a_cit13"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit14" memberEnd="_a_cit14_e1 _a_cit14_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit14_e1" type="_citizen"  association="_a_cit14"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit14_e2" type="_uc14"     association="_a_cit14"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_cit15" memberEnd="_a_cit15_e1 _a_cit15_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit15_e1" type="_citizen"  association="_a_cit15"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_cit15_e2" type="_uc15"     association="_a_cit15"/>
+  </packagedElement>
+
+  <!-- ADMIN associations -->
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm02" memberEnd="_a_adm02_e1 _a_adm02_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm02_e1" type="_admin" association="_a_adm02"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm02_e2" type="_uc02"  association="_a_adm02"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm03" memberEnd="_a_adm03_e1 _a_adm03_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm03_e1" type="_admin" association="_a_adm03"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm03_e2" type="_uc03"  association="_a_adm03"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm16" memberEnd="_a_adm16_e1 _a_adm16_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm16_e1" type="_admin" association="_a_adm16"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm16_e2" type="_uc16"  association="_a_adm16"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm17" memberEnd="_a_adm17_e1 _a_adm17_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm17_e1" type="_admin" association="_a_adm17"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm17_e2" type="_uc17"  association="_a_adm17"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm18" memberEnd="_a_adm18_e1 _a_adm18_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm18_e1" type="_admin" association="_a_adm18"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm18_e2" type="_uc18"  association="_a_adm18"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm19" memberEnd="_a_adm19_e1 _a_adm19_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm19_e1" type="_admin" association="_a_adm19"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm19_e2" type="_uc19"  association="_a_adm19"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm20" memberEnd="_a_adm20_e1 _a_adm20_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm20_e1" type="_admin" association="_a_adm20"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm20_e2" type="_uc20"  association="_a_adm20"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm21" memberEnd="_a_adm21_e1 _a_adm21_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm21_e1" type="_admin" association="_a_adm21"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm21_e2" type="_uc21"  association="_a_adm21"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm22" memberEnd="_a_adm22_e1 _a_adm22_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm22_e1" type="_admin" association="_a_adm22"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm22_e2" type="_uc22"  association="_a_adm22"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm23" memberEnd="_a_adm23_e1 _a_adm23_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm23_e1" type="_admin" association="_a_adm23"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm23_e2" type="_uc23"  association="_a_adm23"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_adm24" memberEnd="_a_adm24_e1 _a_adm24_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm24_e1" type="_admin" association="_a_adm24"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_adm24_e2" type="_uc24"  association="_a_adm24"/>
+  </packagedElement>
+
+  <!-- POLICE associations -->
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol02" memberEnd="_a_pol02_e1 _a_pol02_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol02_e1" type="_police" association="_a_pol02"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol02_e2" type="_uc02"   association="_a_pol02"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol14" memberEnd="_a_pol14_e1 _a_pol14_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol14_e1" type="_police" association="_a_pol14"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol14_e2" type="_uc14"   association="_a_pol14"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol25" memberEnd="_a_pol25_e1 _a_pol25_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol25_e1" type="_police" association="_a_pol25"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol25_e2" type="_uc25"   association="_a_pol25"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol26" memberEnd="_a_pol26_e1 _a_pol26_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol26_e1" type="_police" association="_a_pol26"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol26_e2" type="_uc26"   association="_a_pol26"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol27" memberEnd="_a_pol27_e1 _a_pol27_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol27_e1" type="_police" association="_a_pol27"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol27_e2" type="_uc27"   association="_a_pol27"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol29" memberEnd="_a_pol29_e1 _a_pol29_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol29_e1" type="_police" association="_a_pol29"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol29_e2" type="_uc29"   association="_a_pol29"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol30" memberEnd="_a_pol30_e1 _a_pol30_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol30_e1" type="_police" association="_a_pol30"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol30_e2" type="_uc30"   association="_a_pol30"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_pol31" memberEnd="_a_pol31_e1 _a_pol31_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol31_e1" type="_police" association="_a_pol31"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_pol31_e2" type="_uc31"   association="_a_pol31"/>
+  </packagedElement>
+
+  <!-- MUNICIPAL associations -->
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun02" memberEnd="_a_mun02_e1 _a_mun02_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun02_e1" type="_municipal" association="_a_mun02"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun02_e2" type="_uc02"      association="_a_mun02"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun14" memberEnd="_a_mun14_e1 _a_mun14_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun14_e1" type="_municipal" association="_a_mun14"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun14_e2" type="_uc14"      association="_a_mun14"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun32" memberEnd="_a_mun32_e1 _a_mun32_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun32_e1" type="_municipal" association="_a_mun32"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun32_e2" type="_uc32"      association="_a_mun32"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun33" memberEnd="_a_mun33_e1 _a_mun33_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun33_e1" type="_municipal" association="_a_mun33"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun33_e2" type="_uc33"      association="_a_mun33"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun34" memberEnd="_a_mun34_e1 _a_mun34_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun34_e1" type="_municipal" association="_a_mun34"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun34_e2" type="_uc34"      association="_a_mun34"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun36" memberEnd="_a_mun36_e1 _a_mun36_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun36_e1" type="_municipal" association="_a_mun36"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun36_e2" type="_uc36"      association="_a_mun36"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun37" memberEnd="_a_mun37_e1 _a_mun37_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun37_e1" type="_municipal" association="_a_mun37"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun37_e2" type="_uc37"      association="_a_mun37"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_mun38" memberEnd="_a_mun38_e1 _a_mun38_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun38_e1" type="_municipal" association="_a_mun38"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_mun38_e2" type="_uc38"      association="_a_mun38"/>
+  </packagedElement>
+
+  <!-- EXTERNAL ACTOR associations -->
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_ext_clerk" memberEnd="_a_ext_clerk_e1 _a_ext_clerk_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_clerk_e1" type="_clerkAuth" association="_a_ext_clerk"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_clerk_e2" type="_uc02"      association="_a_ext_clerk"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_ext_map" memberEnd="_a_ext_map_e1 _a_ext_map_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_map_e1" type="_mapSvc" association="_a_ext_map"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_map_e2" type="_uc07"   association="_a_ext_map"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_a_ext_trans" memberEnd="_a_ext_trans_e1 _a_ext_trans_e2">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_trans_e1" type="_translationSvc" association="_a_ext_trans"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_a_ext_trans_e2" type="_uc04"            association="_a_ext_trans"/>
+  </packagedElement>
+
+</uml:Model>

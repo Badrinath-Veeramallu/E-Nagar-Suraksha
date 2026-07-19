@@ -1,0 +1,112 @@
+{
+    "nav": {
+        "home": "Home",
+        "dashboard": "Dashboard",
+        "complaints": "Complaints",
+        "notifications": "Notifications",
+        "profile": "Profile",
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Register"
+    },
+    "auth": {
+        "welcome": "Welcome to e-Nagar Suraksha",
+        "tagline": "Report civic issues. Track resolution. Build your city.",
+        "loginTitle": "Sign in to your account",
+        "registerTitle": "Create a citizen account",
+        "email": "Email address",
+        "password": "Password",
+        "name": "Full name",
+        "phone": "Phone number",
+        "loginBtn": "Sign In",
+        "registerBtn": "Create Account",
+        "noAccount": "Don't have an account?",
+        "hasAccount": "Already have an account?"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "submitComplaint": "Submit Complaint",
+        "myComplaints": "My Complaints",
+        "complaints": "Complaints",
+        "analytics": "Analytics",
+        "allComplaints": "All Complaints",
+        "users": "Users",
+        "departments": "Departments",
+        "auditLogs": "Audit Logs",
+        "portal": "Portal",
+        "preferredLanguage": "Preferred Language"
+    },
+    "complaint": {
+        "submit": "Submit Complaint",
+        "track": "Track Complaint",
+        "id": "Complaint ID",
+        "category": "Category",
+        "title": "Title",
+        "description": "Description",
+        "address": "Address",
+        "location": "Location",
+        "status": "Status",
+        "priority": "Priority",
+        "assignedTo": "Assigned To",
+        "submitBtn": "Submit Complaint",
+        "consent": "I consent to the submission of this complaint and understand my information will be used to resolve this issue",
+        "duplicate": "A similar complaint already exists nearby",
+        "categories": {
+            "road_issue": "Road Issue",
+            "garbage": "Garbage",
+            "water_supply": "Water Supply",
+            "streetlight": "Streetlight",
+            "security": "Security",
+            "drainage": "Drainage",
+            "noise": "Noise",
+            "electrical": "Electrical Issue",
+            "sanitation": "Sanitation",
+            "other": "Other"
+        },
+        "statuses": {
+            "draft": "Draft",
+            "submitted": "Submitted",
+            "pending_review": "Pending Review",
+            "assigned": "Assigned",
+            "in_progress": "In Progress",
+            "escalated": "Escalated",
+            "resolved": "Resolved",
+            "reopened": "Reopened",
+            "closed": "Closed"
+        },
+        "priorities": {
+            "urgent": "Urgent",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        }
+    },
+    "dashboard": {
+        "totalComplaints": "Total Complaints",
+        "pending": "Pending",
+        "resolved": "Resolved",
+        "escalated": "Escalated",
+        "slaBreach": "SLA Breach",
+        "recentComplaints": "Recent Complaints",
+        "myComplaints": "My Complaints"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "noData": "No data found",
+        "save": "Save",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "search": "Search",
+        "filter": "Filter",
+        "submit": "Submit",
+        "close": "Close",
+        "back": "Back",
+        "next": "Next",
+        "slaOverdue": "SLA Overdue",
+        "timeRemaining": "Time Remaining"
+    }
+}

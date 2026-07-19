@@ -1,0 +1,124 @@
+@startuml E-Nagar_Communication_Diagram
+'!pragma layout smetana
+
+title E-Nagar Suraksha — Communication Diagram\n(Object Interaction with Numbered Messages)
+
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam sequence {
+  ArrowColor       #2C3E50
+  LifeLineBorderColor #7F8C8D
+  ParticipantBorderColor  #2C3E50
+  ParticipantBackgroundColor #ECF0F1
+  ParticipantFontStyle Bold
+  NoteBackgroundColor #FFFDE7
+  NoteBorderColor  #F39C12
+  BoxBackgroundColor #F4F6F7
+  BoxBorderColor   #BDC3C7
+}
+
+' ════════════════════════════════════════════════════════════════════
+' OBJECTS (represented as participants — no Graphviz needed)
+' ════════════════════════════════════════════════════════════════════
+
+box "Client Side" #E8F4FD
+  participant "citizen\n:User"            as citizen
+  participant "browser\n:ReactFrontend"   as browser
+end box
+
+box "Server Side" #E8F8EF
+  participant "api\n:ExpressAPI"          as api
+  participant "auth\n:ClerkAuth"          as auth
+  participant "router\n:AutoRouter"       as router
+  participant "db\n:MongoDB"              as db
+end box
+
+box "Notification Layer" #FFF8EE
+  participant "notif\n:NotificationSvc"  as notif
+  participant "socket\n:SocketIO"        as socket
+  participant "officer\n:Officer"        as officer
+end box
+
+' ════════════════════════════════════════════════════════════════════
+' FLOW A — Complaint Submission
+' ════════════════════════════════════════════════════════════════════
+
+== FLOW A: Complaint Submission ==
+
+citizen -> browser : **1:** submitComplaintForm(data, images, location)
+browser -> api     : **2:** POST /api/complaints (multipart/form-data)
+activate api
+api     -> auth    : **3:** verifyToken(JWT)
+auth    -> api     : **4:** {userId, role}
+
+api     -> db      : **5:** checkDuplicate(location, keywords)
+db      -> api     : **6:** duplicateResult {found | not_found}
+
+note right of api
+  If duplicate found →
+  return 409 to browser
+end note
+
+api     -> db      : **7:** saveComplaint(complaintData)
+db      -> api     : **8:** {complaintId, trackingId}
+
+api     -> router  : **9:** route(category)
+router  -> api     : **10:** {assignedDept: "police" | "municipal"}
+
+api     -> db      : **11:** updateAssignment(complaintId, deptId)
+
+api     -> notif   : **12:** sendNotification(officerId, complaintId)
+notif   -> socket  : **13:** emit("new_complaint", officerId)
+socket  -> officer : **14:** push(notificationPayload)
+
+api     -> browser : **15:** {success: true, trackingId}
+deactivate api
+browser -> citizen : **16:** displayConfirmation(trackingId)
+
+' ════════════════════════════════════════════════════════════════════
+' FLOW B — Complaint Resolution
+' ════════════════════════════════════════════════════════════════════
+
+== FLOW B: Complaint Resolution ==
+
+officer -> browser : **R1:** clickResolve(complaintId)
+
+note over browser, api
+  **Municipal Officer** → proof upload is MANDATORY before resolve
+  **Police Officer**    → proof upload is OPTIONAL
+end note
+
+browser -> api     : **R2:** POST /api/complaints/:id/proof (proof images)
+activate api
+api     -> db      : **R3:** saveProofImages(complaintId, fileUrls)
+db      -> api     : **R4:** {proofSaved: true}
+
+browser -> api     : **R5:** PUT /api/complaints/:id/update-status\n          {status: "resolved"}
+api     -> auth    : **R6:** verifyToken(JWT)
+auth    -> api     : **R7:** {valid: true, role}
+api     -> db      : **R8:** updateStatus("resolved", resolvedAt: now)
+db      -> api     : **R9:** {updated: true}
+
+api     -> notif   : **R10:** notifyResolution(citizenId, complaintId)
+notif   -> socket  : **R11:** emit("complaint_resolved", citizenId)
+socket  -> citizen : **R12:** push("Your complaint has been resolved ✓")
+
+api     -> browser : **R13:** {success: true, status: "resolved"}
+deactivate api
+
+' ════════════════════════════════════════════════════════════════════
+' FLOW C — Status Tracking (Citizen)
+' ════════════════════════════════════════════════════════════════════
+
+== FLOW C: Citizen Tracks Status ==
+
+citizen -> browser : **T1:** openTrackingPage(trackingId)
+browser -> api     : **T2:** GET /api/complaints/search?trackingId=...\n          (public route — no auth required)
+activate api
+api     -> db      : **T3:** findByTrackingId(trackingId)
+db      -> api     : **T4:** {complaint: {status, assignedDept, timeline}}
+api     -> browser : **T5:** complaintDetails
+deactivate api
+browser -> citizen : **T6:** displayStatusTimeline()
+
+@enduml

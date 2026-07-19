@@ -1,0 +1,112 @@
+{
+    "nav": {
+        "home": "హోమ్",
+        "dashboard": "డాష్‌బోర్డ్",
+        "complaints": "ఫిర్యాదులు",
+        "notifications": "నోటిఫికేషన్లు",
+        "profile": "ప్రొఫైల్",
+        "logout": "లాగ్ అవుట్",
+        "login": "లాగిన్",
+        "register": "నమోదు"
+    },
+    "auth": {
+        "welcome": "ఈ-నగర్ సురక్ష కి స్వాగతం",
+        "tagline": "పౌర సమస్యలను నివేదించండి. పరిష్కారాన్ని ట్రాక్ చేయండి.",
+        "loginTitle": "మీ ఖాతాకు లాగిన్ అవ్వండి",
+        "registerTitle": "పౌర ఖాతా సృష్టించండి",
+        "email": "ఇమెయిల్ చిరునామా",
+        "password": "పాస్‌వర్డ్",
+        "name": "పూర్తి పేరు",
+        "phone": "ఫోన్ నంబర్",
+        "loginBtn": "లాగిన్",
+        "registerBtn": "ఖాతా సృష్టించండి",
+        "noAccount": "ఖాతా లేదా?",
+        "hasAccount": "ఖాతా ఉందా?"
+    },
+    "sidebar": {
+        "dashboard": "డాష్‌బోర్డ్",
+        "submitComplaint": "ఫిర్యాదు దాఖలు చేయండి",
+        "myComplaints": "నా ఫిర్యాదులు",
+        "complaints": "ఫిర్యాదులు",
+        "analytics": "విశ్లేషణ",
+        "allComplaints": "అన్ని ఫిర్యాదులు",
+        "users": "వినియోగదారులు",
+        "departments": "విభాగాలు",
+        "auditLogs": "ఆడిట్ లాగ్‌లు",
+        "portal": "పోర్టల్",
+        "preferredLanguage": "ఇష్టపడే భాష"
+    },
+    "complaint": {
+        "submit": "ఫిర్యాదు దాఖలు చేయండి",
+        "track": "ఫిర్యాదు ట్రాక్ చేయండి",
+        "id": "ఫిర్యాదు ID",
+        "category": "వర్గం",
+        "title": "శీర్షిక",
+        "description": "వివరణ",
+        "address": "చిరునామా",
+        "location": "స్థానం",
+        "status": "స్థితి",
+        "priority": "ప్రాధాన్యత",
+        "assignedTo": "కేటాయించబడింది",
+        "submitBtn": "ఫిర్యాదు దాఖలు చేయండి",
+        "consent": "ఈ ఫిర్యాదు దాఖలుకు నా అంగీకారం తెలియజేస్తున్నాను",
+        "duplicate": "సమీపంలో ఇదే విధమైన ఫిర్యాదు ఉంది",
+        "categories": {
+            "road_issue": "రోడ్డు సమస్య",
+            "garbage": "చెత్త",
+            "water_supply": "నీటి సరఫరా",
+            "streetlight": "వీధి దీపాలు",
+            "security": "భద్రత",
+            "drainage": "కాలువ",
+            "noise": "శబ్దం",
+            "electrical": "విద్యుత్ సమస్య",
+            "sanitation": "పరిశుభ్రత",
+            "other": "ఇతర"
+        },
+        "statuses": {
+            "draft": "డ్రాఫ్ట్",
+            "submitted": "దాఖలు చేయబడింది",
+            "pending_review": "సమీక్షలో",
+            "assigned": "కేటాయించబడింది",
+            "in_progress": "పురోగతిలో",
+            "escalated": "ఎస్కలేట్ చేయబడింది",
+            "resolved": "పరిష్కరించబడింది",
+            "reopened": "తిరిగి తెరవబడింది",
+            "closed": "మూసివేయబడింది"
+        },
+        "priorities": {
+            "urgent": "అత్యవసరం",
+            "high": "అధిక",
+            "medium": "మధ్యస్థ",
+            "low": "తక్కువ"
+        }
+    },
+    "dashboard": {
+        "totalComplaints": "మొత్తం ఫిర్యాదులు",
+        "pending": "పెండింగ్",
+        "resolved": "పరిష్కరించబడింది",
+        "escalated": "ఎస్కలేట్",
+        "slaBreach": "SLA ఉల్లంఘన",
+        "recentComplaints": "ఇటీవలి ఫిర్యాదులు",
+        "myComplaints": "నా ఫిర్యాదులు"
+    },
+    "common": {
+        "loading": "లోడ్ అవుతోంది...",
+        "error": "ఏదో తప్పు జరిగింది",
+        "noData": "డేటా కనుగొనబడలేదు",
+        "save": "సేవ్ చేయండి",
+        "cancel": "రద్దు",
+        "confirm": "నిర్ధారించండి",
+        "delete": "తొలగించండి",
+        "edit": "సవరించండి",
+        "view": "చూడండి",
+        "search": "శోధించండి",
+        "filter": "వడపోత",
+        "submit": "సమర్పించండి",
+        "close": "మూసివేయండి",
+        "back": "వెనుకకు",
+        "next": "తదుపరి",
+        "slaOverdue": "SLA గడువు మించింది",
+        "timeRemaining": "మిగిలిన సమయం"
+    }
+}

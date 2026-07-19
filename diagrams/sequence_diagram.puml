@@ -1,0 +1,163 @@
+@startuml E-Nagar_Sequence_Diagrams
+title E-Nagar Suraksha — Sequence Diagrams (Auth · Submission · Resolution)
+
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor            #2C3E50
+  ActorBorderColor      #2980B9
+  ActorBackgroundColor  #D6EAF8
+  LifeLineBorderColor   #95A5A6
+  ParticipantBorderColor   #2C3E50
+  ParticipantBackgroundColor #ECF0F1
+  ParticipantFontStyle  Bold
+  NoteBackgroundColor   #FFFDE7
+  NoteBorderColor       #F39C12
+  BoxBackgroundColor    #FDFEFE
+  BoxBorderColor        #BDC3C7
+}
+
+' ════════════════════════════════════════════════════════════
+' FLOW A — Authentication via Clerk
+' ════════════════════════════════════════════════════════════
+
+== Flow A : Authentication (Clerk) ==
+
+actor       "Citizen"     as CitA
+participant "React UI"    as UIA
+participant "Clerk Auth"  as CLA
+participant "Express API" as APIA
+participant "MongoDB"     as DBA
+
+CitA -> UIA  : enterCredentials(email, password)
+UIA  -> CLA  : signIn(credentials)
+CLA  -> UIA  : JWT sessionToken + userId
+UIA  -> APIA : POST /auth/sync {clerkId, token}
+activate APIA
+APIA -> CLA  : verifyToken(JWT)
+CLA  -> APIA : decoded {userId, email}
+APIA -> DBA  : findOrCreateUser(clerkId)
+DBA  -> APIA : user {_id, name, role}
+APIA -> UIA  : {success, token, role}
+deactivate APIA
+UIA  -> CitA : redirectToDashboard(role)
+
+|||
+
+' ════════════════════════════════════════════════════════════
+' FLOW B — Complaint Submission
+' ════════════════════════════════════════════════════════════
+
+== Flow B : Complaint Submission ==
+
+actor       "Citizen"       as CitB
+participant "React UI"      as UIB
+participant "Express API"   as APIB
+participant "Clerk Auth"    as CLB
+participant "MongoDB"       as DBB
+participant "AutoRouter"    as ARB
+participant "Socket.IO"     as SKB
+participant "Officer"       as OFB
+
+CitB -> UIB  : fillForm(title, category, location, photo?)
+
+note right of UIB
+  Photo optional  → Police-type category
+  Photo required  → Municipal-type category
+end note
+
+UIB  -> APIB : POST /api/complaints (multipart/form-data)
+activate APIB
+APIB -> CLB  : verifyToken(JWT)
+CLB  -> APIB : {valid, userId, role: "citizen"}
+APIB -> DBB  : checkDuplicate(geo, keywords)
+DBB  -> APIB : duplicateResult
+
+alt Duplicate Detected
+  APIB -> UIB  : 409 {error: "Duplicate complaint found"}
+  UIB  -> CitB : showDuplicateWarning()
+else No Duplicate
+  APIB -> DBB  : saveComplaint(data, images)
+  DBB  -> APIB : {complaintId, trackingId}
+  APIB -> ARB  : route(category)
+  ARB  -> APIB : {assignedDept: "police" | "municipal"}
+  APIB -> DBB  : assignDepartment(complaintId, deptId)
+  APIB -> SKB  : emit("new_complaint", {officerId, complaintId})
+  SKB  -> OFB  : push(notificationPayload)
+  APIB -> UIB  : 201 {success: true, trackingId}
+  UIB  -> CitB : displayConfirmation(trackingId)
+end
+deactivate APIB
+
+|||
+
+' ════════════════════════════════════════════════════════════
+' FLOW C — Complaint Resolution (Police & Municipal)
+' ════════════════════════════════════════════════════════════
+
+== Flow C : Complaint Resolution ==
+
+participant "Officer UI"  as OUI
+participant "Express API" as APIC
+participant "Validator"   as VALC
+participant "MongoDB"     as DBC
+participant "Socket.IO"   as SKC
+actor       "Citizen"     as CitC
+
+OUI  -> APIC : GET /api/complaints/:id
+activate APIC
+APIC -> DBC  : findComplaint(id)
+DBC  -> APIC : complaintData {status, category, assignedDept}
+APIC -> OUI  : complaintDetails
+deactivate APIC
+
+OUI  -> APIC : PUT /complaints/:id/update-status {status:"in_progress"}
+activate APIC
+APIC -> DBC  : updateStatus("in_progress")
+DBC  -> APIC : updated
+APIC -> OUI  : {success: true}
+deactivate APIC
+
+note over OUI, APIC
+  **SLA Enforcement (background job)**
+  If SLA deadline passes with no resolution →
+  status auto-escalates: in_progress → URGENT
+end note
+
+alt Municipal Officer — Proof MANDATORY
+  OUI  -> APIC : POST /complaints/:id/proof (images — required)
+  activate APIC
+  APIC -> VALC : validateProofImages(files)
+  VALC -> APIC : {valid: true, count: N}
+  APIC -> DBC  : saveProofImages(complaintId, fileUrls)
+  DBC  -> APIC : proofSaved
+  deactivate APIC
+  OUI  -> APIC : PUT /complaints/:id/update-status {status:"resolved"}
+  activate APIC
+  APIC -> DBC  : updateStatus("resolved", resolvedAt: now())
+  DBC  -> APIC : updated
+  deactivate APIC
+else Police Officer — Proof OPTIONAL
+  OUI  -> APIC : PUT /complaints/:id/update-status {status:"resolved"}
+  activate APIC
+  APIC -> DBC  : updateStatus("resolved", resolvedAt: now())
+  DBC  -> APIC : updated
+  deactivate APIC
+end
+
+APIC -> SKC  : emit("complaint_resolved", citizenId)
+SKC  -> CitC : push("Your complaint has been resolved ✓")
+APIC -> OUI  : {success: true, status: "resolved"}
+
+CitC -> OUI  : submitFeedback(rating: 1–5, comment)
+OUI  -> APIC : POST /complaints/:id/feedback {rating, comment}
+activate APIC
+APIC -> DBC  : saveFeedback(complaintId, rating, comment)
+DBC  -> APIC : feedbackSaved
+APIC -> DBC  : updateStatus("closed")
+DBC  -> APIC : updated
+APIC -> OUI  : {statusFinal: "closed"}
+deactivate APIC
+
+@enduml

@@ -1,0 +1,112 @@
+{
+    "nav": {
+        "home": "होम",
+        "dashboard": "डैशबोर्ड",
+        "complaints": "शिकायतें",
+        "notifications": "सूचनाएं",
+        "profile": "प्रोफ़ाइल",
+        "logout": "लॉग आउट",
+        "login": "लॉगिन",
+        "register": "पंजीकरण"
+    },
+    "auth": {
+        "welcome": "ई-नगर सुरक्षा में आपका स्वागत है",
+        "tagline": "नागरिक समस्याओं की रिपोर्ट करें। समाधान ट्रैक करें।",
+        "loginTitle": "अपने खाते में साइन इन करें",
+        "registerTitle": "नागरिक खाता बनाएं",
+        "email": "ईमेल पता",
+        "password": "पासवर्ड",
+        "name": "पूरा नाम",
+        "phone": "फोन नंबर",
+        "loginBtn": "साइन इन",
+        "registerBtn": "खाता बनाएं",
+        "noAccount": "खाता नहीं है?",
+        "hasAccount": "पहले से खाता है?"
+    },
+    "sidebar": {
+        "dashboard": "डैशबोर्ड",
+        "submitComplaint": "शिकायत दर्ज करें",
+        "myComplaints": "मेरी शिकायतें",
+        "complaints": "शिकायतें",
+        "analytics": "विश्लेषण",
+        "allComplaints": "सभी शिकायतें",
+        "users": "उपयोगकर्ता",
+        "departments": "विभाग",
+        "auditLogs": "ऑडिट लॉग",
+        "portal": "पोर्टल",
+        "preferredLanguage": "पसंदीदा भाषा"
+    },
+    "complaint": {
+        "submit": "शिकायत दर्ज करें",
+        "track": "शिकायत ट्रैक करें",
+        "id": "शिकायत आईडी",
+        "category": "श्रेणी",
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "address": "पता",
+        "location": "स्थान",
+        "status": "स्थिति",
+        "priority": "प्राथमिकता",
+        "assignedTo": "सौंपा गया",
+        "submitBtn": "शिकायत दर्ज करें",
+        "consent": "मैं इस शिकायत के सबमिशन के लिए सहमति देता हूं",
+        "duplicate": "पास में एक समान शिकायत पहले से मौजूद है",
+        "categories": {
+            "road_issue": "सड़क की समस्या",
+            "garbage": "कचरा",
+            "water_supply": "जल आपूर्ति",
+            "streetlight": "स्ट्रीट लाइट",
+            "security": "सुरक्षा",
+            "drainage": "जल निकासी",
+            "noise": "शोर",
+            "electrical": "बिजली की समस्या",
+            "sanitation": "स्वच्छता",
+            "other": "अन्य"
+        },
+        "statuses": {
+            "draft": "ड्राफ्ट",
+            "submitted": "सबमिट किया",
+            "pending_review": "समीक्षा में",
+            "assigned": "सौंपा गया",
+            "in_progress": "प्रगति में",
+            "escalated": "एस्केलेट किया",
+            "resolved": "हल किया",
+            "reopened": "फिर से खोला",
+            "closed": "बंद"
+        },
+        "priorities": {
+            "urgent": "आपातकालीन",
+            "high": "उच्च",
+            "medium": "मध्यम",
+            "low": "कम"
+        }
+    },
+    "dashboard": {
+        "totalComplaints": "कुल शिकायतें",
+        "pending": "लंबित",
+        "resolved": "हल किया",
+        "escalated": "एस्केलेट",
+        "slaBreach": "SLA उल्लंघन",
+        "recentComplaints": "हाल की शिकायतें",
+        "myComplaints": "मेरी शिकायतें"
+    },
+    "common": {
+        "loading": "लोड हो रहा है...",
+        "error": "कुछ गलत हुआ",
+        "noData": "कोई डेटा नहीं मिला",
+        "save": "सहेजें",
+        "cancel": "रद्द करें",
+        "confirm": "पुष्टि करें",
+        "delete": "हटाएं",
+        "edit": "संपादित करें",
+        "view": "देखें",
+        "search": "खोजें",
+        "filter": "फ़िल्टर",
+        "submit": "सबमिट",
+        "close": "बंद करें",
+        "back": "वापस",
+        "next": "अगला",
+        "slaOverdue": "SLA अतिदेय",
+        "timeRemaining": "शेष समय"
+    }
+}
