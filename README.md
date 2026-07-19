@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # e-Nagar Suraksha 🏙️
 
 **Public Complaint Reporting & Tracking System** — A production-ready civic platform for citizens, police officers, municipal officers, and administrators.
@@ -191,3 +192,7 @@ e-nagar-suraksha/
 | Block Users | ❌ | ❌ | ❌ | ✅ |
 | View Analytics | ❌ | ❌ | ❌ | ✅ |
 | View Audit Logs | ❌ | ❌ | ❌ | ✅ |
+=======
+# E-Nagar Suraksha
+A production-ready civic platform for citizens, police officers, municipal officers, and administrators to report and solve the complaints and know the acknowledgement of the complaints 
+>>>>>>> 14ba00151352fba5256f8aa821b26c227ff307ad
